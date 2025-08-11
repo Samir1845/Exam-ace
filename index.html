@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Exam Ace </title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f141a; /* very dark */
+      color: #e0e6e9;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    /* Scrollbar for better UX */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1f2733;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00c2a8;
+      border-radius: 4px;
+    }
+
+    /* --- Splash screen --- */
+    #logoScreen {
+      position: fixed;
+      inset: 0;
+      background: #09111a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      z-index: 9999;
+      animation: splashFadeOut 1s ease forwards;
+      animation-delay: 3.5s;
+      opacity: 1;
+      filter: drop-shadow(0 0 8px #00c2a8);
+    }
+    #logoScreen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.3);
+      filter: drop-shadow(0 0 0 #00c2a8);
+      transition: opacity 1s ease, transform 1s ease, filter 1s ease;
+    }
+
+    @keyframes splashFadeOut {
+      to {
+        opacity: 0;
+        transform: scale(1.3);
+        visibility: hidden;
+        filter: drop-shadow(0 0 0 #00c2a8);
+      }
+    }
+
+    .logo-container {
+      text-align: center;
+      user-select: none;
+    }
+    .logo-container svg {
+      width: 100px;
+      height: 100px;
+      stroke: #00c2a8;
+      fill: none;
+      stroke-width: 4;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      animation: pulseGlow 2.5s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 6px #00c2a8);
+    }
+    .logo-container svg {
+  width: 100px;
+  height: 100px;
+  stroke: #00c2a8;
+  fill: none;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  /* Light bahut kam */
+  filter: drop-shadow(0 0 2px rgba(0, 194, 168, 0.4));
+}
+    @keyframes pulseGlow {
+      0% {
+        stroke-width: 3.5;
+        filter: drop-shadow(0 0 5px #00c2a8);
+      }
+      100% {
+        stroke-width: 5;
+        filter: drop-shadow(0 0 14px #00ffe0);
+      }
+    }
+.logo-container .title {
+  background: rgba(0, 0, 0, 0.2); /* Transparent black for contrast */
+  padding: 4px 10px;
+  border-radius: 8px;
+
+  /* Neon-style multi-color glow */
+  box-shadow: 
+    0 0 4px #ff00ff,
+    0 0 8px #00ffff,
+    0 0 12px #ff00ff,
+    0 0 16px #00ffff;
+
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: white;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+    .logo-container .title {
+      margin-top: 20px;
+      font-size: 2.6rem;
+      color: white;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-shadow: 0 0 8px #00ffe0;
+      animation: fadeInUp 1.3s ease forwards;
+    }
+    .logo-container .footer {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: #3c8075;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      animation: fadeInUp 1.3s ease forwards;
+      animation-delay: 0.3s;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --- Main content --- */
+    #mainScreen {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 24px 24px 48px;
+      background: linear-gradient(135deg, #0b161f 0%, #122d32 100%);
+      position: relative;
+    }
+
+    /* --- Top bar: logo left, menu right --- */
+    #topBar {
+      position: sticky;
+      top: 0;
+      z-index: 10002;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #021a17;
+      padding: 12px 24px;
+      box-shadow: 0 2px 6px rgba(0,194,168,0.5);
+      user-select: none;
+    }#topBar {
+  background-color: #1a0026; /* Dark purple base */
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid rgba(200, 0, 255, 0.5);
+  box-shadow: 
+    0 0 8px rgba(200, 0, 255, 0.6),
+    0 0 16px rgba(200, 0, 255, 0.4),
+    0 0 24px rgba(200, 0, 255, 0.2);
+}
+
+    #topBar .logo-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #00c2a8;
+      font-weight: 900;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      cursor: default;
+      user-select: none;
+     
+    }
+    #topBar .logo-text svg {
+      width: 32px;
+      height: 32px;
+      stroke: #00c2a8;
+      fill: none;
+      stroke-width: 3;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 4px #00c2a8);
+    }
+
+
+
+    /* --- Study section --- */
+    .study-section {
+      max-width: 860px;
+      margin: 80px auto 48px;
+      text-align: left;
+      padding: 0 12px;
+      line-height: 1.6;
+      color: #c6d8dc;
+      font-size: 1.1rem;
+      font-weight: 500;
+      user-select: text;
+    }
+    .study-section img {
+      max-width: 100%;
+      border-radius: 16px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 28px rgba(0,194,168,0.6);
+      transition: transform 0.3s ease;
+    }
+    .study-section img:hover {
+      transform: scale(1.03);
+    }
+
+    /* --- Exams cards --- */
+    #examsSection {
+      max-width: 900px;
+      margin: 0 auto 48px;
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+    .exam-card {
+      background: #022c29;
+      color: #b8fff9;
+      border-radius: 18px;
+      padding: 24px 28px;
+      box-shadow: 0 8px 20px rgba(0,194,168,0.4);
+      cursor: pointer;
+      transition: box-shadow 0.4s ease, transform 0.3s ease;
+      user-select: none;
+      outline-offset: 4px;
+      outline: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      
+    }
+    
+    .exam-card:hover,
+    .exam-card:focus {
+      box-shadow: 0 14px 40px rgba(0,255,228,0.9);
+      transform: translateY(-5px);
+      outline: none;
+    }
+    .exam-card h3 {
+      margin: 0 0 14px;
+      font-size: 2rem;
+      font-weight: 900;
+      color: #00ffe0;
+      letter-spacing: 0.6px;
+    }
+    .exam-card p {
+      margin: 0 0 16px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #a1dad4;
+      flex-grow: 1;
+    }
+    .exam-card a {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #ffd54f;
+      text-decoration:none;
+      transition: color 0.3s ease;
+      align-self: flex-start;
+    }
+    .exam-card a:hover,
+    .exam-card a:focus {
+      color: #ffff8a;
+      outline: none;
+    }
+
+    /* --- Footer sections (About Us etc) --- */
+    section[id="aboutUs"],
+    section[id="privacyPolicy"],
+    section[id="disclaimer"] {
+      max-width: 860px;
+      margin: 0 auto 56px;
+      padding: 20px 20px 30px;
+      color: #8dc6c3;
+      font-weight: 500;
+      user-select: text;
+    }
+    section[id="aboutUs"] h2,
+    section[id="privacyPolicy"] h2,
+    section[id="disclaimer"] h2 {
+      font-weight: 900;
+      font-size: 2rem;
+      color: #00c2a8;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    /* --- Scroll to Top Button --- */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      background: linear-gradient(135deg, #00c2a8, #008080);
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0, 194, 168, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      padding: 0;
+    }
+    #scrollTopBtn:hover {
+      background: linear-gradient(135deg, #00ffe0, #00aa99);
+    }
+    #scrollTopBtn svg {
+      display: block;
+      margin: auto;
+      stroke: white;
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .study-section {
+        margin: 60px 20px 40px;
+        font-size: 1rem;
+      }
+      #examsSection {
+        padding: 0 20px;
+      }
+      .exam-card {
+        padding: 20px 18px;
+        font-size: 0.95rem;
+      }
+      .exam-card h3 {
+        font-size: 1.5rem;
+      }
+      
+    }
+    .exam-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.exam-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+<!-- Changes in CSS -->
+<style>
+  /* Splash title glow animation */
+  .logo-container .title {
+    margin-top: 20px;
+    font-size: 3.2rem;
+    color: #00c2a8;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-shadow: 0 0 6px #00ffe0, 0 0 12px #00c2a8;
+    animation: titleGlow 2s ease-in-out infinite alternate, fadeInUp 1.3s ease forwards;
+  }
+
+  @keyframes titleGlow {
+    0% { text-shadow: 0 0 6px #00ffe0, 0 0 12px #00c2a8; }
+    100% { text-shadow: 0 0 10px #00ffe0, 0 0 20px #00c2a8; }
+  }
+
+  /* Footer fade-in */
+  .logo-container .footer {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #3c8075;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    opacity: 0;
+    animation: fadeInUp 1.3s ease forwards;
+    animation-delay: 0.8s;
+  }
+
+  /* Hide menu button to remove white icon */
+  #menuBtn {
+    display: none;
+  }
+.po {
+  text-align: center;
+  background-color: #111; /* dark background for AI effect */
+  margin-bottom: 25px;
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Glow effect using ::before */
+.po::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #ff00ff,
+    #00ffff,
+    #ff9900,
+    #ff00ff
+  );
+  animation: rotate 6s linear infinite;
+  z-index: -1;
+  filter: blur(60px); /* soft light */
+}
+
+/* Rotation animation */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Full Logo Glow Box */
+#topBar .logo-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  color: #00f5d4;
+  font-weight: 900;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  border-radius: 15px;
+  border: 2px solid #00f5d4;
+  background: rgba(0, 245, 212, 0.05);
+  box-shadow: 
+    0 0 15px rgba(0, 245, 212, 0.8),
+    0 0 30px rgba(0, 245, 212, 0.5),
+    inset 0 0 10px rgba(0, 245, 212, 0.4);
+}
+
+/* Logo Icon Glow */
+#topBar .logo-text svg {
+  width: 32px;
+  height: 32px;
+  stroke: #00f5d4;
+  fill: none;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #00f5d4);
+}
+/* Neon Glow Animation */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 
+      0 0 10px rgba(0, 245, 212, 0.7),
+      0 0 20px rgba(0, 245, 212, 0.5),
+      inset 0 0 5px rgba(0, 245, 212, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 0 20px rgba(0, 245, 212, 1),
+      0 0 40px rgba(0, 245, 212, 0.8),
+      inset 0 0 15px rgba(0, 245, 212, 0.6);
+  }
+  100% {
+    box-shadow: 
+      0 0 10px rgba(0, 245, 212, 0.7),
+      0 0 20px rgba(0, 245, 212, 0.5),
+      inset 0 0 5px rgba(0, 245, 212, 0.4);
+  }
+}
+
+/* Full Logo Glow Box */
+#topBar .logo-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  color: #00f5d4;
+  font-weight: 900;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  border-radius: 15px;
+  border: 2px solid #00f5d4;
+  background: rgba(0, 245, 212, 0.05);
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Logo Icon Glow */
+#topBar .logo-text svg {
+  width: 32px;
+  height: 32px;
+  stroke: #00f5d4;
+  fill: none;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #00f5d4);
+}
+.logo-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 2px solid rgba(0, 255, 200, 0.8); /* neon border */
+  border-radius: 8px;
+  color: #00ffc8; /* neon text color */
+  font-weight: bold;
+  font-size: 1.5rem;
+  background-color: #0d0d0d;
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.8),
+              0 0 20px rgba(0, 255, 200, 0.6),
+              0 0 30px rgba(0, 255, 200, 0.4);
+}
+.logo-text svg {
+  stroke: #00ffc8;
+  stroke-width: 3;
+  fill: none;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Splash screen -->
+  <div id="logoScreen" aria-label="Exam Ace Logo Splash Screen" role="img" aria-live="polite">
+    <div class="logo-container">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" >
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+      <div class="title">EXAM ACE</div>
+      <div class="footer">Developed by Samir Ahmad Ganaie</div>
+    </div>
+  </div>
+
+  <!-- Main Screen -->
+  <div id="mainScreen" role="main" aria-label="Main Application Screen" tabindex="-1">
+
+    <!-- Top bar with logo left and hamburger right -->
+    <header id="topBar">
+      <div class="logo-text" aria-label="Exam Ace Logo and Title">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" >
+          <polyline points="20 6 9 17 4 12" />
+        </svg>
+        EXAM ACE
+      </div>
+      <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false" aria-controls="menuPanel" type="button">
+        <div></div>
+        <div></div>
+        <div></div>
+      </button>
+    </header>
+
+
+    <!-- Study Section -->
+    <section class="study-section" aria-label="Study information and image">
+      <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?auto=format&fit=crop&w=900&q=80" alt="Students studying with books" />
+      <p>Success in competitive exams requires dedication, strategy, and continuous practice. Exam Ace offers carefully curated study materials and guidance to help you achieve your goals efficiently.</p>
+      <p>Effective studying involves clear goal-setting, focused environments, regular breaks, and varied learning techniques such as summarizing and self-quizzing. Stay organized, motivated, and maintain healthy habits for best results.</p>
+    </section>
+<div class="po"><h1><b>EXAMS</b></h1> </div>
+    <!-- Exams Section -->
+    <section id="examsSection" aria-label="List of exams">
+      <!-- UPSC -->
+      <div class="exam-card" tabindex="0" role="button" aria-label="Open UPSC Civil Services syllabus" 
+           onclick="window.open('upse.html', '_blank')" 
+           onkeydown="if(event.key==='Enter' || event.key===' ') { window.open('upse.html', '_blank'); }">
+        <h3>UPSC Civil Services</h3>
+        <p>India's premier exam for IAS, IPS, IFS, covering polity, history, geography, economics, and current affairs.</p>
+        <a href="upse.html" target="_blank" rel="noopener">Go to UPSC</a>
+      </div>
+
+      <!-- SSC CGL -->
+      <div class="exam-card" tabindex="0" role="button" aria-label="Open SSC CGL syllabus" 
+           onclick="window.open('ssc.html', '_blank')" 
+           onkeydown="if(event.key==='Enter' || event.key===' ') { window.open('ssc.html', '_blank'); }">
+        <h3>SSC CGL</h3>
+        <p>Staff Selection Commission Combined Graduate Level exam for Group B and C government posts.</p>
+        <a href="ssc.html" target="_blank" rel="noopener">Go to SSC CGL</a>
+      </div>
+
+      <!-- SSC GD -->
+      <div class="exam-card" tabindex="0" role="button" aria-label="Open SSC GD syllabus" 
+           onclick="window.open('sscgd.html', '_blank')" 
+           onkeydown="if(event.key==='Enter' || event.key===' ') { window.open('sscgd.html', '_blank'); }">
+        <h3>SSC GD</h3>
+        <p>Recruitment exam for police forces and paramilitary services under Staff Selection Commission.</p>
+        <a href="sscgd.html" target="_blank" rel="noopener">Go to SSC GD</a>
+      </div>
+    </section>
+
+    <!-- Footer Sections -->
+    <section id="aboutUs" tabindex="0">
+      <h2>About Us</h2>
+      <p>Exam Ace is dedicated to helping aspirants prepare for competitive exams with quality content and simple navigation.</p>
+    </section>
+    <section id="privacyPolicy" tabindex="0">
+      <h2>Privacy Policy</h2>
+      <p>Your privacy is important to us. We do not share your data with third parties and keep all information secure.</p>
+    </section>
+    <section id="disclaimer" tabindex="0">
+      <h2>Disclaimer</h2>
+      <p>The content provided on Exam Ace is for educational purposes only. Please verify all exam details from official sources.</p>
+    </section>
+
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <button id="scrollTopBtn" aria-label="Scroll to top" title="Go to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" >
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
+
+  <script>
+    // Wait for splash screen animation to finish and then show main screen
+    window.addEventListener('load', () => {
+      const logoScreen = document.getElementById('logoScreen');
+      const mainScreen = document.getElementById('mainScreen');
+      
+      // After 3.5s delay + 1s fade out, hide splash and show main content
+      setTimeout(() => {
+        logoScreen.classList.add('hidden');
+        setTimeout(() => {
+          logoScreen.style.display = 'none';
+          mainScreen.style.display = 'flex';
+          mainScreen.focus();
+        }, 1000);
+      }, 3500);
+    });
+
+    // Hamburger Menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = menuBtn.classList.toggle('open');
+      menuPanel.classList.toggle('open', isOpen);
+
+      menuBtn.setAttribute('aria-expanded', isOpen);
+      menuPanel.setAttribute('aria-hidden', !isOpen);
+
+      // Manage focus for accessibility
+      if (isOpen) {
+        menuPanel.focus();
+      } else {
+        menuBtn.focus();
+      }
+    });
+
+    // Keyboard toggle on menuBtn with Enter or Space
+    menuBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        menuBtn.click();
+      }
+    });
+
+    // Close menu when clicking outside menuPanel or menuBtn
+    document.addEventListener('click', (e) => {
+      if (!menuPanel.contains(e.target) && !menuBtn.contains(e.target)) {
+        if (menuBtn.classList.contains('open')) {
+          menuBtn.classList.remove('open');
+          menuPanel.classList.remove('open');
+          menuBtn.setAttribute('aria-expanded', false);
+          menuPanel.setAttribute('aria-hidden', true);
+        }
+      }
+    });
+
+    // Scroll to Top Button functionality
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    scrollBtn.style.display = 'none'; // Hide initially
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollBtn.style.display = 'flex';
+      } else {
+        scrollBtn.style.display = 'none';
+      }
+    });
+
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollBtn.blur();
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.exam-card');
+
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.2
+  };
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  cards.forEach(card => observer.observe(card));
+});
+  </script>
+</body>
+</html>
