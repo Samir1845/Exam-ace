@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SSC GD & Subjects</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f0f8ff;
+    color: #222;
+    line-height: 1.5;
+  }
+  .container {
+    max-width: 800px;
+    margin: auto;
+  }
+  .fixed-home-btn-right {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: blue;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  button#viewSubjectsBtn {
+    background-color: #00796b;
+    color: white;
+    border: none;
+    padding: 14px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+  }
+  button#viewSubjectsBtn:hover {
+    background-color: #004d40;
+  }
+  h1, h2 {
+    color: #00796b;
+  }
+  .description-box {
+    background: #e0f2f1;
+    border-left: 6px solid #00796b;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  .subject-list {
+    margin-bottom: 40px;
+  }
+  .subject-card {
+    color: white;
+    padding: 18px 22px;
+    margin: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .subject-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  }
+  #subjectDetails {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .question-box {
+    margin: 15px 0;
+    padding: 15px;
+    border: 1px solid #00796b;
+    border-radius: 8px;
+  }
+  .question-text {
+    font-weight: 600;
+  }
+  .answer-text {
+    margin-top: 6px;
+    font-weight: bold;
+    color: #00796b;
+  }
+  .explanation-text {
+    margin-top: 6px;
+    font-style: italic;
+    color: #555;
+  }
+  .back-btn {
+    background-color: #004d40;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="fixed-home-btn-right" title="Home">Home</a>
+
+<div class="container">
+
+  <!-- View Subjects Button -->
+  <button id="viewSubjectsBtn">View Subjects ↓</button>
+
+  <!-- SSC GD Detailed Description -->
+  <div class="description-box" id="sscDescription">
+    <h1>SSC GD Exam - Detailed Overview</h1>
+    <p>
+      The Staff Selection Commission - General Duty (SSC GD) exam is a national-level exam to recruit candidates in various paramilitary and police forces such as BSF, CISF, CRPF, ITBP, SSB, etc.
+      It tests candidates on General Intelligence & Reasoning, General Knowledge, Elementary Mathematics, and English/Hindi.
+    </p>
+    <p>
+      After the written exam, candidates face physical tests including running, long jump, and high jump. Minimum physical standards vary by category.
+      Preparation includes practice of reasoning, current affairs, mathematics, and maintaining fitness.
+    </p>
+    <p>
+      This exam offers a secure government job with good pay and benefits. Regular practice and dedication are key for success.
+    </p>
+  </div>
+
+  <!-- Subjects List -->
+  <div class="subject-list" id="subjectList">
+    <h2>Subjects</h2>
+    <!-- Subject cards inserted here by JS -->
+  </div>
+
+  <!-- Subject Details -->
+  <div id="subjectDetails" style="display:none;">
+    <button class="back-btn" id="backToSubjects">← Back to Subjects</button>
+    <h2 id="subjectTitle"></h2>
+    <p id="subjectDescription"></p>
+    <div id="questionsContainer"></div>
+  </div>
+
+</div>
+
+<script>
+  // Subject data with questions including explanations
+  const subjects = [
+    {
+      name: "General Intelligence & Reasoning",
+      description: "This section tests logical reasoning, pattern recognition, and analytical skills.",
+      bgColor: "#4caf50",
+      questions: [
+        {
+          question: "What comes next in the series: 2, 4, 8, 16, ?",
+          answer: "32",
+          explanation: "Each number is multiplied by 2 to get the next number."
+        },
+        {
+          question: "If all Bloops are Razzies and all Razzies are Lazzies, are all Bloops definitely Lazzies?",
+          answer: "Yes",
+          explanation: "If A is subset of B and B is subset of C, then A is subset of C."
+        },
+        {
+          question: "Find the odd one out: Apple, Banana, Carrot, Mango",
+          answer: "Carrot",
+          explanation: "Carrot is a vegetable; the rest are fruits."
+        },
+        {
+          question: "If A = 1, B = 2, then what is the sum of C + D + E?",
+          answer: "12",
+          explanation: "C=3, D=4, E=5; 3+4+5=12."
+        },
+        {
+          question: "What number comes next: 5, 10, 20, 40, ?",
+          answer: "80",
+          explanation: "Each number is multiplied by 2."
+        },
+        {
+          question: "If 3 pencils cost ₹15, what is the cost of 7 pencils?",
+          answer: "₹35",
+          explanation: "Cost per pencil = ₹5; 7 pencils cost 7×5=₹35."
+        },
+        {
+          question: "Which word does not belong: Circle, Triangle, Rectangle, Pencil?",
+          answer: "Pencil",
+          explanation: "All others are shapes; pencil is an object."
+        },
+        {
+          question: "If today is Monday, what day will be 15 days from now?",
+          answer: "Tuesday",
+          explanation: "15 days later is 2 weeks + 1 day; so Monday + 1 day = Tuesday."
+        },
+        {
+          question: "Find the next number: 1, 4, 9, 16, 25, ?",
+          answer: "36",
+          explanation: "These are perfect squares: 1², 2², 3², 4², 5², so next is 6²=36."
+        },
+        {
+          question: "If in a code, CAT is written as DBU, how is DOG written?",
+          answer: "EPH",
+          explanation: "Each letter is shifted by 1 forward in the alphabet."
+        }
+      ]
+    },
+    {
+      name: "General Knowledge & Awareness",
+      description: "This section includes current affairs, history, geography, and basic general knowledge.",
+      bgColor: "#f57c00",
+      questions: [
+        {
+          question: "Who is the President of India (2025)?",
+          answer: "Droupadi Murmu",
+          explanation: "She became the 15th President of India and the country's first tribal woman president."
+        },
+        {
+          question: "What is the capital of Arunachal Pradesh?",
+          answer: "Itanagar",
+          explanation: "Itanagar is the largest town and the capital city of Arunachal Pradesh."
+        },
+        {
+          question: "Which river is known as the 'Sorrow of Bihar'?",
+          answer: "Kosi River",
+          explanation: "Kosi River frequently causes devastating floods in Bihar, hence the nickname."
+        }
+      ]
+    },
+    {
+      name: "Elementary Mathematics",
+      description: "Basic arithmetic, number systems, percentages, ratios, and simple algebra.",
+      bgColor: "#2196f3",
+      questions: [
+        {
+          question: "What is 25% of 200?",
+          answer: "50",
+          explanation: "25% means 25/100 times 200 = 50."
+        },
+        {
+          question: "Solve: 3x + 5 = 20. Find x.",
+          answer: "x = 5",
+          explanation: "3x = 20 - 5 => 3x = 15 => x = 15 / 3 = 5."
+        },
+        {
+          question: "What is the square root of 144?",
+          answer: "12",
+          explanation: "12 × 12 = 144, so square root is 12."
+        }
+      ]
+    },
+    {
+  name: "Coding Decoding",
+  description: "Test your skills on codes, patterns, and logical puzzles.",
+  bgColor: "#e91e63",
+  questions: [
+    {
+      question: "If 'FISH' is coded as 'GJTI', then how is 'COLD' coded?",
+      answer: "DPME",
+      explanation: "Each letter is shifted by +1 in the alphabet."
+    },
+    {
+      question: "In a certain code, '123' means 'I am good', '345' means 'good and well', what does '15' mean?",
+      answer: "I well",
+      explanation: "'1' corresponds to 'I' and '5' corresponds to 'well'."
+    },
+    {
+      question: "Find the next number in the series: 2, 6, 12, 20, ?",
+      answer: "30",
+      explanation: "Difference of consecutive terms increases by 2 (4,6,8,...)."
+    },
+    {
+      question: "If 'APPLE' is written as 'ELPPA', what is the code for 'BANANA'?",
+      answer: "ANANAB",
+      explanation: "The word is reversed."
+    },
+    {
+      question: "Find the odd one out: 24, 36, 48, 59, 60",
+      answer: "59",
+      explanation: "All except 59 are divisible by 12."
+    },
+    {
+      question: "If in a code, CAT = DBU, then DOG = ?",
+      answer: "EPH",
+      explanation: "Each letter is shifted by +1."
+    },
+    {
+      question: "A series is 1, 4, 9, 16, ?, 36. Find the missing number.",
+      answer: "25",
+      explanation: "These are perfect squares: 1^2, 2^2, 3^2, 4^2, 5^2, 6^2."
+    },
+    {
+      question: "If BOOK is written as COOL, how is PEN written?",
+      answer: "QFO",
+      explanation: "Each letter is shifted by +1."
+    },
+    {
+      question: "Decode the pattern: If 'MANGO' = 53164, then 'APPLE' = ?",
+      answer: "11245",
+      explanation: "Each letter corresponds to a number assigned arbitrarily."
+    },
+    {
+      question: "If all BLOOPS are RAZZIES and all RAZZIES are LAZZIES, are all BLOOPS LAZZIES?",
+      answer: "Yes",
+      explanation: "If A is subset of B and B is subset of C, then A is subset of C."
+    }
+  ]
+},
+{
+  name: "General Science",
+  description: "Covers basics of Physics, Chemistry, and Biology relevant for SSC exams.",
+  bgColor: "#3f51b5",
+  questions: [
+    {
+      question: "What is the chemical formula of water?",
+      answer: "H₂O",
+      explanation: "Water is composed of two hydrogen atoms bonded to one oxygen atom."
+    },
+    {
+      question: "What force keeps planets in orbit around the sun?",
+      answer: "Gravity",
+      explanation: "Gravity is the attractive force between masses, holding planets in orbit."
+    },
+    {
+      question: "Which gas is essential for human respiration?",
+      answer: "Oxygen",
+      explanation: "Humans inhale oxygen to produce energy through cellular respiration."
+    },
+    {
+      question: "What is the boiling point of water at sea level?",
+      answer: "100°C",
+      explanation: "At standard atmospheric pressure, water boils at 100 degrees Celsius."
+    },
+    {
+      question: "What is photosynthesis?",
+      answer: "Process by which plants make food using sunlight.",
+      explanation: "Plants convert carbon dioxide and water into glucose and oxygen using sunlight."
+    },
+    {
+      question: "Which part of the cell controls its activities?",
+      answer: "Nucleus",
+      explanation: "Nucleus contains genetic material and regulates cell functions."
+    },
+    {
+      question: "What is the unit of electric current?",
+      answer: "Ampere (A)",
+      explanation: "Electric current is measured in amperes."
+    },
+    {
+      question: "Which vitamin is produced when the skin is exposed to sunlight?",
+      answer: "Vitamin D",
+      explanation: "Sunlight triggers Vitamin D synthesis in the skin."
+    },
+    {
+      question: "What type of energy is stored in food?",
+      answer: "Chemical energy",
+      explanation: "Food stores chemical energy released during metabolism."
+    },
+    {
+      question: "Which organ in the human body filters blood to produce urine?",
+      answer: "Kidneys",
+      explanation: "Kidneys remove waste products and excess substances from blood."
+    }
+  ]
+},
+{
+  name: "Current Affairs & General Knowledge",
+  description: "Includes important events, history, politics, geography, and economy for SSC exams.",
+  bgColor: "#ff9800",
+  questions: [
+    {
+      question: "Who was the first Prime Minister of India?",
+      answer: "Jawaharlal Nehru",
+      explanation: "He served as India’s first Prime Minister from 1947 to 1964."
+    },
+    {
+      question: "What is the capital of Madhya Pradesh?",
+      answer: "Bhopal",
+      explanation: "Bhopal is the capital city of the central Indian state Madhya Pradesh."
+    },
+    {
+      question: "When did India become a republic?",
+      answer: "26th January 1950",
+      explanation: "On this day, the Constitution of India came into effect, making India a republic."
+    },
+    {
+      question: "Which river is known as the ‘Ganga of the South’?",
+      answer: "Godavari",
+      explanation: "Godavari is the longest river in peninsular India, often called the ‘Dakshina Ganga’."
+    },
+    {
+      question: "Who is the current President of India (2025)?",
+      answer: "Droupadi Murmu",
+      explanation: "Droupadi Murmu became India’s 15th President and the first tribal woman in 2022."
+    },
+    {
+      question: "What is the main function of the Election Commission of India?",
+      answer: "Conduct free and fair elections",
+      explanation: "It administers elections to Parliament, State Legislatures, and the offices of President and Vice-President."
+    },
+    {
+      question: "What was the main aim of the Non-Cooperation Movement?",
+      answer: "To protest British rule through non-violent means",
+      explanation: "Led by Mahatma Gandhi, it aimed to boycott British goods and institutions."
+    },
+    {
+      question: "Which Indian state has the largest population?",
+      answer: "Uttar Pradesh",
+      explanation: "Uttar Pradesh is the most populous state in India."
+    },
+    {
+      question: "What is GDP?",
+      answer: "Gross Domestic Product",
+      explanation: "It measures the total value of goods and services produced in a country during a specific period."
+    },
+    {
+      question: "Which political party is the oldest in India?",
+      answer: "Indian National Congress",
+      explanation: "Founded in 1885, it played a key role in India’s freedom struggle."
+    }
+  ]
+},
+{
+  name: "Computer Science",
+  description: "Basics of computers, programming, networking, and software concepts.",
+  bgColor: "#3f51b5",
+  questions: [
+    {
+      question: "What does CPU stand for?",
+      answer: "Central Processing Unit",
+      explanation: "It is the brain of the computer that performs instructions."
+    },
+    {
+      question: "What is an algorithm?",
+      answer: "A step-by-step procedure to solve a problem",
+      explanation: "Algorithms are used in programming to outline how to perform tasks."
+    },
+    {
+      question: "What is the primary function of an operating system?",
+      answer: "To manage hardware and software resources",
+      explanation: "It acts as an interface between the user and the computer hardware."
+    },
+    {
+      question: "What is a compiler?",
+      answer: "A program that converts source code into machine code",
+      explanation: "It translates high-level language into low-level language executable by the CPU."
+    },
+    {
+      question: "What does RAM stand for?",
+      answer: "Random Access Memory",
+      explanation: "RAM is the volatile memory used to store data for running programs."
+    },
+    {
+      question: "What is the Internet?",
+      answer: "A global network connecting millions of computers",
+      explanation: "It allows communication and data exchange worldwide."
+    },
+    {
+      question: "What is a programming language?",
+      answer: "A language used to write computer programs",
+      explanation: "Examples include Python, Java, C++, which allow humans to write instructions for computers."
+    },
+    {
+      question: "What is a database?",
+      answer: "An organized collection of data",
+      explanation: "Databases store data so it can be easily accessed, managed, and updated."
+    },
+    {
+      question: "What is software?",
+      answer: "Programs and operating information used by a computer",
+      explanation: "It is the non-tangible part of computers responsible for performing tasks."
+    },
+    {
+      question: "What does URL stand for?",
+      answer: "Uniform Resource Locator",
+      explanation: "It is the address used to access websites on the Internet."
+    }
+  ]
+},
+{
+  name: "Current Affairs",
+  description: "Important recent events and updates in politics, economy, sports, and international relations.",
+  bgColor: "#ff9800",
+  questions: [
+    {
+      question: "Who is the current Prime Minister of India (2025)?",
+      answer: "Narendra Modi",
+      explanation: "Narendra Modi has been serving as the PM since 2014."
+    },
+    {
+      question: "Which country recently hosted the G20 Summit?",
+      answer: "India",
+      explanation: "India hosted the G20 summit in 2023 in New Delhi."
+    },
+    {
+      question: "What is the significance of the International Day of Yoga?",
+      answer: "Promotes global awareness of yoga's benefits.",
+      explanation: "Celebrated every year on June 21 worldwide."
+    },
+    {
+      question: "Which country recently landed a rover on the Moon?",
+      answer: "China",
+      explanation: "China's Chang'e 5 mission successfully landed on the Moon in 2020."
+    },
+    {
+      question: "Who won the ICC Cricket World Cup 2023?",
+      answer: "India",
+      explanation: "India defeated Australia in the final to win the cup."
+    },
+    {
+      question: "What is the Digital India initiative?",
+      answer: "A campaign to improve online infrastructure and digital literacy.",
+      explanation: "Launched by the Government of India to empower citizens digitally."
+    },
+    {
+      question: "Which vaccine is used primarily in the COVID-19 vaccination drive in India?",
+      answer: "Covaxin and Covishield",
+      explanation: "Both vaccines have been widely used in India’s mass immunization."
+    },
+    {
+      question: "What is the significance of the Chandrayaan 3 mission?",
+      answer: "India's successful lunar landing mission in 2023.",
+      explanation: "It made India the fourth country to achieve a soft landing on the Moon."
+    },
+    {
+      question: "Which city will host the 2036 Summer Olympics?",
+      answer: "Doha, Qatar",
+      explanation: "Doha was selected to host the games after a bidding process."
+    },
+    {
+      question: "What is the purpose of the International Solar Alliance?",
+      answer: "To promote solar energy use globally.",
+      explanation: "Founded by India and France to increase solar power deployment."
+    }
+  ]
+},
+{
+  name: "Physical Test",
+  description: "Learn about SSC GD Physical Test, standards, and preparation strategies.",
+  bgColor: "#4caf50",
+  questions: [
+    {
+      question: "What is the minimum height required for male candidates in SSC GD Physical Standard Test?",
+      answer: "170 cm",
+      explanation: "As per SSC GD guidelines, male candidates must have a minimum height of 170 cm (relaxations for reserved categories)."
+    },
+    {
+      question: "What is the minimum height required for female candidates in SSC GD PST?",
+      answer: "157 cm",
+      explanation: "Female candidates must have a minimum height of 157 cm (relaxations for reserved categories)."
+    },
+    {
+      question: "What is the chest measurement requirement for male candidates?",
+      answer: "80 cm (unexpanded) and 85 cm (expanded)",
+      explanation: "Male candidates must have at least 5 cm chest expansion from 80 cm to 85 cm."
+    },
+    {
+      question: "How long should male candidates take to complete the 5 km race in PET?",
+      answer: "24 minutes",
+      explanation: "In the SSC GD PET, male candidates must complete 5 km running within 24 minutes."
+    },
+    {
+      question: "What is the PET requirement for female candidates?",
+      answer: "1.6 km race in 8.5 minutes",
+      explanation: "Female candidates must complete the 1.6 km race within 8 minutes and 30 seconds."
+    },
+    {
+      question: "Do ex-servicemen have to run in PET?",
+      answer: "No",
+      explanation: "Ex-servicemen are exempted from PET running but must pass PST and medical examination."
+    },
+    {
+      question: "Name one key exercise to improve running stamina.",
+      answer: "Interval Running",
+      explanation: "Interval running alternates between high-speed and slow-speed running to build endurance."
+    },
+    {
+      question: "What is the best time of day to practice for PET?",
+      answer: "Morning",
+      explanation: "Morning workouts help the body adapt to cooler conditions similar to test timings."
+    },
+    {
+      question: "How many weeks of preparation are ideally recommended for PET?",
+      answer: "At least 4 weeks",
+      explanation: "A minimum of 4 weeks of focused practice improves stamina and timing for PET."
+    },
+    {
+      question: "Which nutrient is most important for muscle recovery during training?",
+      answer: "Protein",
+      explanation: "Protein helps repair and build muscles after physical workouts."
+    }
+  ]
+},
+{
+  name: "Physical Test Practice",
+  description: "Detailed preparation strategies for SSC GD Physical Efficiency Test and Physical Standard Test.",
+  bgColor: "#009688",
+  questions: [
+    {
+      question: "How should you start training for the 5 km race if you are a beginner?",
+      answer: "Start with 2 km slow running for the first week.",
+      explanation: "If you are new, running 5 km from day one can cause fatigue and injury. Start with 2 km at an easy pace, increase distance by 500m every 3 days until you reach 5 km."
+    },
+    {
+      question: "What is the correct running posture for maximum efficiency?",
+      answer: "Slight forward lean, relaxed shoulders, and steady breathing.",
+      explanation: "Leaning slightly forward uses gravity to propel you, relaxed shoulders prevent stiffness, and steady breathing improves oxygen supply to muscles."
+    },
+    {
+      question: "What warm-up routine should you do before PET practice?",
+      answer: "10 minutes of dynamic stretching followed by 5 minutes of light jogging.",
+      explanation: "Dynamic stretches like leg swings and arm circles prepare your muscles, while light jogging increases blood flow and reduces injury risk."
+    },
+    {
+      question: "How can you improve your running speed in the last 500 meters?",
+      answer: "Use sprint intervals during training.",
+      explanation: "Practicing short bursts of high speed in the last part of your run trains your body to push harder at the finish."
+    },
+    {
+      question: "What breathing technique is best for long-distance running?",
+      answer: "Inhale through the nose for 3 steps, exhale through the mouth for 2 steps.",
+      explanation: "This technique ensures rhythmic breathing, better oxygen intake, and less fatigue."
+    },
+    {
+      question: "How many days per week should you practice for PET?",
+      answer: "5 days a week with 2 days rest.",
+      explanation: "Running every day without rest leads to overtraining. Rest days help muscles recover and grow stronger."
+    },
+    {
+      question: "What type of diet supports PET preparation?",
+      answer: "High-protein, balanced carbs, and hydration.",
+      explanation: "Protein repairs muscles, carbs provide energy, and water keeps you hydrated for endurance."
+    },
+    {
+      question: "How should you pace yourself in the 5 km race?",
+      answer: "Run the first 3 km at a comfortable pace, then increase speed gradually.",
+      explanation: "Starting too fast can cause early fatigue. A steady pace keeps energy for the final sprint."
+    },
+    {
+      question: "What mental strategy helps during long runs?",
+      answer: "Break the run into small segments in your mind.",
+      explanation: "Instead of thinking about 5 km at once, focus on reaching the next 500m. This makes the distance feel shorter."
+    },
+    {
+      question: "How to practice for 1.6 km race for females?",
+      answer: "Alternate between slow jogging and short sprints for 20 minutes daily.",
+      explanation: "This improves both endurance and speed, helping you complete 1.6 km in the required 8.5 minutes."
+    }
+  ]
+},
+{
+  name: "Medical Test Practice",
+  description: "Preparation guide for SSC GD medical standards, vision tests, and overall fitness requirements.",
+  bgColor: "#9c27b0",
+  questions: [
+    {
+      question: "What is the minimum height requirement for male candidates in SSC GD?",
+      answer: "170 cm for general category (relaxation for certain categories).",
+      explanation: "Male candidates must be at least 170 cm tall (except for specified relaxation for ST and other categories as per SSC rules)."
+    },
+    {
+      question: "What is the minimum height requirement for female candidates in SSC GD?",
+      answer: "157 cm for general category.",
+      explanation: "Female candidates must be at least 157 cm tall, with relaxations for some categories."
+    },
+    {
+      question: "What is the required chest measurement for male candidates?",
+      answer: "Unexpanded: 80 cm; Expanded: 85 cm.",
+      explanation: "Male candidates should have at least 5 cm expansion between normal and expanded chest measurements."
+    },
+    {
+      question: "What eyesight standard is required for SSC GD?",
+      answer: "6/6 and 6/9 vision without glasses.",
+      explanation: "Candidates must have near-perfect vision without corrective lenses. Wearing spectacles during the test will not be allowed."
+    },
+    {
+      question: "How can candidates prepare for the vision test?",
+      answer: "Limit screen time, eat vitamin A-rich foods, and do eye exercises.",
+      explanation: "Carrots, spinach, and regular eye rest improve vision; avoiding excessive screen time helps reduce strain."
+    },
+    {
+      question: "What is the hearing ability requirement?",
+      answer: "Normal hearing without aids.",
+      explanation: "You must be able to hear whispered words at a distance of 6 meters in one ear and 3 meters in the other."
+    },
+    {
+      question: "How can you prepare for the chest expansion test?",
+      answer: "Practice deep breathing exercises daily.",
+      explanation: "Exercises like pranayama and deep inhales strengthen lung capacity, improving chest expansion."
+    },
+    {
+      question: "What should you avoid before the medical test?",
+      answer: "Heavy workout, oily food, and late-night sleep.",
+      explanation: "These can cause fatigue, dehydration, and eye redness, which might affect results."
+    },
+    {
+      question: "How to maintain overall fitness for the medical test?",
+      answer: "Balanced diet, daily exercise, and adequate rest.",
+      explanation: "A mix of cardio, strength, and stretching keeps the body in peak condition for all checks."
+    },
+    {
+      question: "What to do if you have a minor medical issue before the test?",
+      answer: "Consult a doctor and get treatment in advance.",
+      explanation: "Even minor issues like ear wax or conjunctivitis can lead to temporary disqualification if not treated before the test."
+    }
+  ]
+}
+  ];
+
+  const subjectListDiv = document.getElementById("subjectList");
+  const subjectDetailsDiv = document.getElementById("subjectDetails");
+  const subjectTitle = document.getElementById("subjectTitle");
+  const subjectDesc = document.getElementById("subjectDescription");
+  const questionsContainer = document.getElementById("questionsContainer");
+  const sscDescriptionDiv = document.getElementById("sscDescription");
+  const viewSubjectsBtn = document.getElementById("viewSubjectsBtn");
+  const backToSubjectsBtn = document.getElementById("backToSubjects");
+
+  // Populate subject cards
+  function renderSubjects() {
+    subjectListDiv.innerHTML = "<h2>Subjects</h2>";
+    subjects.forEach((sub, idx) => {
+      const card = document.createElement("div");
+      card.className = "subject-card";
+      card.style.backgroundColor = sub.bgColor;
+      card.textContent = sub.name;
+      card.style.userSelect = "none";
+      card.addEventListener("click", () => showSubjectDetails(idx));
+      subjectListDiv.appendChild(card);
+    });
+  }
+
+  // Show subject details and questions without scroll
+  function showSubjectDetails(index) {
+    const sub = subjects[index];
+    subjectTitle.textContent = sub.name;
+    subjectDesc.textContent = sub.description;
+
+    // Clear and add questions with explanation
+    questionsContainer.innerHTML = "";
+    sub.questions.forEach(q => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question-box";
+
+      const qText = document.createElement("div");
+      qText.className = "question-text";
+      qText.textContent = "Q: " + q.question;
+
+      const aText = document.createElement("div");
+      aText.className = "answer-text";
+      aText.textContent = "Answer: " + q.answer;
+
+      const eText = document.createElement("div");
+      eText.className = "explanation-text";
+      eText.textContent = "Explanation: " + q.explanation;
+
+      qDiv.appendChild(qText);
+      qDiv.appendChild(aText);
+      qDiv.appendChild(eText);
+      questionsContainer.appendChild(qDiv);
+    });
+
+    // Show details, hide subjects list & SSC description
+    subjectDetailsDiv.style.display = "block";
+    subjectListDiv.style.display = "none";
+    sscDescriptionDiv.style.display = "none";
+    viewSubjectsBtn.style.display = "none";
+
+    // *** IMPORTANT: No scrolling here, as you requested ***
+  }
+
+  // Back to subject list view
+  function backToSubjects() {
+    subjectDetailsDiv.style.display = "none";
+    subjectListDiv.style.display = "block";
+    sscDescriptionDiv.style.display = "block";
+    viewSubjectsBtn.style.display = "inline-block";
+
+    // Scroll smoothly to subject list section on back
+    subjectListDiv.scrollIntoView({behavior: "smooth"});
+  }
+
+  // Scroll to subject list on clicking View Subjects button
+  viewSubjectsBtn.addEventListener("click", () => {
+    subjectListDiv.scrollIntoView({behavior: "smooth"});
+  });
+
+  backToSubjectsBtn.addEventListener("click", backToSubjects);
+
+  // Initial render of subject cards
+  renderSubjects();
+</script>
+
+</body>
+</html>
