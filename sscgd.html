@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SSC GD Subjects & Questions</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+    color: #222;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 900px;
+    margin: auto;
+  }
+  h1, h2 {
+    color: #1a237e;
+  }
+  button#viewSubjectsBtn {
+    background-color: #1a237e;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+    display: block;
+  }
+  button#viewSubjectsBtn:hover {
+    background-color: #0d1546;
+  }
+  p.description-text {
+    background: #e8eaf6;
+    border-left: 6px solid #1a237e;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  .subject-list {
+    margin-bottom: 30px;
+  }
+  .subject-card {
+    color: white;
+    padding: 18px 22px;
+    margin: 15px 0;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-weight: 600;
+    font-size: 18px;
+    user-select: none;
+  }
+  .subject-card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  }
+  .back-btn {
+    background-color: #0d1546;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 25px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .question-box {
+    background: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .question-text {
+    font-weight: 600;
+    color: #000000; /* pure black */
+  }
+  .answer-text {
+    margin-top: 6px;
+    font-weight: bold;
+    color: #2e7d32; /* green */
+  }
+  .explanation-text {
+    margin-top: 5px;
+    font-style: italic;
+    color: #1565c0; /* blue */
+  }
+
+  /* Subject card colors */
+  .police-aptitude { background-color: #4caf50; }      /* Green */
+  .general-awareness { background-color: #f57c00; }    /* Orange */
+  .quantitative-aptitude { background-color: #1976d2; }/* Blue */
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    body {
+      margin: 10px;
+    }
+    button#viewSubjectsBtn, .back-btn {
+      padding: 12px 18px;
+      font-size: 14px;
+    }
+    .subject-card {
+      font-size: 16px;
+      padding: 14px 18px;
+    }
+  }.home-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #1a237e; /* navy blue */
+  color: white;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+  box-shadow: 0 3px 8px rgba(26, 35, 126, 0.7);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10000; /* high to stay on top */
+}
+
+.home-btn:hover {
+  background-color: #0d1546;
+  box-shadow: 0 6px 15px rgba(13, 21, 70, 0.9);
+}
+</style>
+</head>
+<body>
+  <a href="index.html" class="home-btn" title="Go to Home">Home</a>
+<div class="container">
+
+  <!-- View Subjects button at top -->
+  <button id="viewSubjectsBtn" title="Go to Subjects">View Subjects ↓</button>
+
+  <!-- SSC GD Description -->
+  <h1>About SSC GD Exam</h1>
+  <p class="description-text" id="sscgdDescription">
+    The SSC General Duty (GD) exam is conducted by the Staff Selection Commission for recruitment of candidates in various paramilitary forces, police departments, and other allied services across India. It is one of the most sought-after exams for candidates aspiring to serve the nation in uniformed roles.<br><br>
+    The exam assesses candidates on multiple aspects including physical fitness, reasoning skills, general awareness, and quantitative aptitude. Candidates are expected to have a sound knowledge of current events, basic mathematics, and the ability to solve problems quickly and accurately.<br><br>
+    Selection through SSC GD opens career paths in forces like Border Security Force (BSF), Central Reserve Police Force (CRPF), Indo-Tibetan Border Police (ITBP), and others. The exam tests both mental and physical preparedness, making it crucial for aspirants to maintain a disciplined study routine.<br><br>
+    Candidates are advised to practice previous year papers, stay updated on national and international events, and improve their physical stamina to succeed.<br><br>
+    The SSC GD exam process includes written examination, physical efficiency test (PET), physical standard test (PST), and document verification. Proper preparation and understanding of syllabus are key to cracking this exam.
+  </p>
+
+  <!-- Subjects List -->
+  <div class="subject-list" id="subjectList">
+    <h2>SSC GD Subjects</h2>
+    <!-- Subject cards generated by JS -->
+  </div>
+
+  <!-- Subject Details view - initially hidden -->
+  <div class="subject-details" id="subjectDetails" style="display:none;">
+    <button class="back-btn" id="backBtn">← Back to Subjects</button>
+    <h2 id="subjectName"></h2>
+    <p id="subjectDesc"></p>
+    <div id="questionsContainer"></div>
+  </div>
+
+</div>
+
+<script>
+  // Subjects + questions data
+  const subjects = [
+    {
+      name: "Police Aptitude Test",
+      description: "Tests reasoning, observation, decision making, and problem-solving skills required for police duties.",
+      bgColorClass: "police-aptitude",
+      questions: [
+        {
+          question: "What is the main purpose of a police aptitude test?",
+          answer: "To assess a candidate's suitability for police service.",
+          explanation: "It evaluates logical thinking, observation, and decision-making."
+        },
+        {
+          question: "Which skill is most important for police work?",
+          answer: "Observation.",
+          explanation: "Police officers must be vigilant to notice unusual activities."
+        },
+        {
+          question: "How can reasoning ability help in police duties?",
+          answer: "By enabling effective problem-solving and decision making.",
+          explanation: "It helps in analyzing situations and acting accordingly."
+        },
+        {
+          question: "What type of questions appear in police aptitude tests?",
+          answer: "Logical reasoning, pattern recognition, and verbal reasoning questions.",
+          explanation: "These measure cognitive abilities relevant to policing."
+        },
+        {
+          question: "Why is decision making important for police officers?",
+          answer: "Because they often need to make quick judgments.",
+          explanation: "Good decisions can prevent crime and save lives."
+        },
+        {
+          question: "What does situational awareness mean?",
+          answer: "Being aware of surroundings and potential threats.",
+          explanation: "Critical for effective policing and personal safety."
+        },
+        {
+          question: "How do police aptitude tests differ from academic exams?",
+          answer: "They focus more on practical reasoning than rote learning.",
+          explanation: "They assess traits relevant to law enforcement."
+        },
+        {
+          question: "What role does memory play in police work?",
+          answer: "Helps recall details of incidents and people involved.",
+          explanation: "Good memory supports investigations and reports."
+        },
+        {
+          question: "Can police aptitude be improved by practice?",
+          answer: "Yes, through regular problem solving and observation exercises.",
+          explanation: "Practice enhances critical thinking skills."
+        },
+        {
+          question: "Is physical fitness tested in police aptitude exams?",
+          answer: "No, physical fitness is tested separately in PET and PST.",
+          explanation: "Aptitude tests focus on mental skills."
+        }
+      ]
+    },
+    {
+      name: "General Awareness",
+      description: "Covers current events, history, geography, culture, and important national/international information.",
+      bgColorClass: "general-awareness",
+      questions: [
+        {
+          question: "What is the capital of India?",
+          answer: "New Delhi.",
+          explanation: "It is the seat of the Government of India."
+        },
+        {
+          question: "Who is the current President of India?",
+          answer: "Droupadi Murmu.",
+          explanation: "She is the 15th President and first tribal woman to hold the post."
+        },
+        {
+          question: "Which river is known as the 'Ganges' of South India?",
+          answer: "The Godavari.",
+          explanation: "It is the longest river in peninsular India."
+        },
+        {
+          question: "What is the main festival celebrated in Punjab?",
+          answer: "Baisakhi.",
+          explanation: "Marks the harvest season and foundation of Sikh community."
+        },
+        {
+          question: "When is Independence Day celebrated in India?",
+          answer: "15th August.",
+          explanation: "Commemorates India's independence from British rule in 1947."
+        },
+        {
+          question: "Who wrote the Indian National Anthem?",
+          answer: "Rabindranath Tagore.",
+          explanation: "He composed 'Jana Gana Mana' in 1911."
+        },
+        {
+          question: "Which country is India's largest trade partner?",
+          answer: "United States of America.",
+          explanation: "USA is a major trading partner with India."
+        },
+        {
+          question: "What is the meaning of 'GDP'?",
+          answer: "Gross Domestic Product.",
+          explanation: "Measures total economic output."
+        },
+        {
+          question: "What is the role of the Election Commission of India?",
+          answer: "Conducts free and fair elections.",
+          explanation: "Ensures democratic process is maintained."
+        },
+        {
+          question: "Which animal is the national bird of India?",
+          answer: "Peacock.",
+          explanation: "Known for its colorful feathers and cultural significance."
+        }
+      ]
+    },
+    {
+      name: "Quantitative Aptitude",
+      description: "Tests numerical ability, basic mathematics, arithmetic, and problem-solving skills.",
+      bgColorClass: "quantitative-aptitude",
+      questions: [
+        {
+          question: "What is 15% of 200?",
+          answer: "30.",
+          explanation: "15% of 200 = (15/100) * 200 = 30."
+        },
+        {
+          question: "If a train travels 60 km in 45 minutes, what is its speed in km/h?",
+          answer: "80 km/h.",
+          explanation: "Speed = Distance/Time = 60 / (45/60) = 80 km/h."
+        },
+        {
+          question: "What is the square root of 144?",
+          answer: "12.",
+          explanation: "Because 12 × 12 = 144."
+        },
+        {
+          question: "Solve: 7 + 2 × 5 = ?",
+          answer: "17.",
+          explanation: "Multiply first: 2×5=10, then add 7: 7+10=17."
+        },
+        {
+          question: "What is the next number in the sequence: 2, 4, 8, 16, ?",
+          answer: "32.",
+          explanation: "Each number doubles the previous one."
+        },
+        {
+          question: "If a product costs Rs. 100 and is sold at 10% profit, what is the selling price?",
+          answer: "Rs. 110.",
+          explanation: "Selling Price = Cost + Profit = 100 + 10 = 110."
+        },
+        {
+          question: "What is the value of Pi (π)?",
+          answer: "Approximately 3.1416.",
+          explanation: "Ratio of circumference to diameter of a circle."
+        },
+        {
+          question: "What is 25 as a fraction of 200?",
+          answer: "1/8.",
+          explanation: "25/200 reduces to 1/8."
+        },
+        {
+          question: "If 5 workers can complete a task in 10 days, how many days will 10 workers take?",
+          answer: "5 days.",
+          explanation: "More workers means less time; time halves when workers double."
+        },
+        {
+          question: "What is the formula for area of a rectangle?",
+          answer: "Length × Width.",
+          explanation: "Multiply the two sides."
+        }
+      ]
+    }
+  ];
+
+  // Elements refs
+  const subjectList = document.getElementById('subjectList');
+  const subjectDetails = document.getElementById('subjectDetails');
+  const subjectName = document.getElementById('subjectName');
+  const subjectDesc = document.getElementById('subjectDesc');
+  const questionsContainer = document.getElementById('questionsContainer');
+  const backBtn = document.getElementById('backBtn');
+  const viewSubjectsBtn = document.getElementById('viewSubjectsBtn');
+
+  // Create subject cards on page load
+  function renderSubjectCards() {
+    subjectList.innerHTML = '<h2>SSC GD Subjects</h2>';
+    subjects.forEach((subj, i) => {
+      const card = document.createElement('div');
+      card.className = 'subject-card ' + subj.bgColorClass;
+      card.textContent = subj.name;
+      card.title = "Click to view questions";
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.addEventListener('click', () => showSubjectDetails(i));
+      card.addEventListener('keydown', e => {
+        if(e.key === 'Enter' || e.key === ' ') showSubjectDetails(i);
+      });
+      subjectList.appendChild(card);
+    });
+  }
+
+  // Show subject details + questions
+  function showSubjectDetails(index) {
+    const subj = subjects[index];
+    subjectName.textContent = subj.name;
+    subjectDesc.textContent = subj.description;
+
+    questionsContainer.innerHTML = '';
+    subj.questions.forEach(q => {
+      const box = document.createElement('div');
+      box.className = 'question-box';
+
+      const qText = document.createElement('div');
+      qText.className = 'question-text';
+      qText.textContent = "Q: " + q.question;
+
+      const aText = document.createElement('div');
+      aText.className = 'answer-text';
+      aText.textContent = "Answer: " + q.answer;
+
+      const eText = document.createElement('div');
+      eText.className = 'explanation-text';
+      eText.textContent = "Explanation: " + q.explanation;
+
+      box.appendChild(qText);
+      box.appendChild(aText);
+      box.appendChild(eText);
+
+      questionsContainer.appendChild(box);
+    });
+
+    // Show details, hide list and button + description scroll
+    subjectList.style.display = 'none';
+    subjectDetails.style.display = 'block';
+    viewSubjectsBtn.style.display = 'none';
+    document.getElementById('sscgdDescription').style.display = 'none';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  // Back to subjects list
+  backBtn.addEventListener('click', () => {
+    subjectList.style.display = 'block';
+    subjectDetails.style.display = 'none';
+    viewSubjectsBtn.style.display = 'block';
+    document.getElementById('sscgdDescription').style.display = 'block';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+  // Scroll to subject list on clicking View Subjects button
+  viewSubjectsBtn.addEventListener('click', () => {
+    window.scrollTo({top: subjectList.offsetTop - 20, behavior: 'smooth'});
+  });
+
+  // Initialize
+  renderSubjectCards();
+</script>
+
+</body>
+</html>
