@@ -221,6 +221,7 @@
 </style>
 </head>
 <body>
+  <!--
 <div id="updateOverlay" style="
   display: none;  /* Initially hidden */
   position: fixed;
@@ -231,7 +232,7 @@
   align-items: center;
   z-index: 99999;
 ">
-  <!-- Update card -->
+  <!-- Update card 
   <div id="updateCard" style="
     background: linear-gradient(135deg, #4e54c8, #8f94fb);
     color: white;
@@ -244,7 +245,7 @@
     text-align: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   ">
-    <!-- Close button -->
+    
     <button id="closeBtn" title="Close update alert" style="
       position: absolute;
       top: 12px;
@@ -261,29 +262,7 @@
 
     <h2 style="font-size: 30px; margin-bottom: 15px;">Update Available</h2>
 
-    <p style="font-size: 17px; line-height: 1.5; margin-bottom: 30px;">
-      Please update to the latest version of this app to enjoy new features and improvements.
-    </p>
-
-    <button id="updateBtn" style="
-      background: #ffd700;
-      color: #333;
-      font-weight: 700;
-      font-size: 18px;
-      padding: 14px 40px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(255, 215, 0, 0.6);
-      transition: background-color 0.3s ease;
-    "
-    onmouseover="this.style.backgroundColor='#ffec7a'"
-    onmouseout="this.style.backgroundColor='#ffd700'">
-      Update Now
-    </button>
-  </div>
-</div>
-<div id="app-content">
+    -->
   <!-- HEADER -->
   <header class="header">
     <button id="burger" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
@@ -393,6 +372,7 @@
   function onSectionChange(hash){
     // if(window.Android && window.Android.onSectionChanged) window.Android.onSectionChanged(hash);
   }
+  /*
   window.addEventListener('hashchange', ()=> onSectionChange(location.hash));
   const currentVersion = "3";  // App ka current version yahan set karo (string ya number)
 
@@ -438,7 +418,7 @@ fetch(versionUrl)
     // Agar error aaye toh bhi content dikhao
     updateOverlay.style.display = "none";
     appContent.style.display = "block";
-  });
+  });*/
 </script>
 </body>
 </html>
