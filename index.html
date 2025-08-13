@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Ace - Splash Screen</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+  }
+
+  /* Glowing floating particles (AI effect) */
+  .particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #00fff0;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: float 6s linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0) scale(1); }
+    50% { transform: translateY(-100vh) translateX(50vw) scale(1.5); }
+    100% { transform: translateY(0) translateX(0) scale(1); }
+  }
+
+  .splash {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Logo animation */
+  .logo {
+    width: 150px;
+    animation: dropLogo 1.2s ease-out forwards;
+  }
+
+  @keyframes dropLogo {
+    0% { transform: translateY(-300px); opacity: 0; }
+    70% { transform: translateY(30px); opacity: 1; }
+    100% { transform: translateY(0); }
+  }
+
+  /* App card */
+  .app-card {
+    margin-top: 30px;
+    padding: 25px 60px;
+    background: rgba(0,255,240,0.1);
+    border-radius: 25px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 25px rgba(0,255,240,0.7), 0 0 50px rgba(0,255,240,0.4) inset;
+    border: 2px solid rgba(0,255,240,0.8);
+    position: relative;
+    overflow: hidden;
+    animation: dropCard 1.5s ease-out forwards, glow 2s ease-in-out infinite alternate;
+    opacity: 0;
+  }
+
+  @keyframes dropCard {
+    0% { transform: translateY(-200px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 15px rgba(0,255,240,0.5), 0 0 40px rgba(0,255,240,0.2) inset; }
+    100% { box-shadow: 0 0 30px rgba(0,255,240,1), 0 0 60px rgba(0,255,240,0.4) inset; }
+  }
+
+  /* Tiny moving lights inside card */
+  .app-card::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, rgba(0,255,240,0.2) 0%, transparent 70%);
+    animation: moveLights 4s linear infinite;
+  }
+
+  @keyframes moveLights {
+    0% { transform: rotate(0deg) translateX(0); }
+    100% { transform: rotate(360deg) translateX(0); }
+  }
+
+  .app-name {
+    color: #00fff0;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="splash">
+  <!-- AI-style particles -->
+  <div class="particle" style="top:20%; left:15%; animation-delay:0s;"></div>
+  <div class="particle" style="top:50%; left:70%; animation-delay:1s;"></div>
+  <div class="particle" style="top:80%; left:30%; animation-delay:2s;"></div>
+  <div class="particle" style="top:60%; left:50%; animation-delay:3s;"></div>
+  <div class="particle" style="top:30%; left:80%; animation-delay:4s;"></div>
+
+  <!-- Logo -->
+  <img src="spp.png" alt="App Logo" class="logo">
+
+  <!-- App Card with Name -->
+  <div class="app-card">
+    <div class="app-name">Exam Ace</div>
+  </div>
+</div>
+
+<script>
+  // Redirect after 5 seconds
+  setTimeout(() => {
+    window.location.href = "sec.html";
+  }, 5000);
+</script>
+
+</body>
+</html>
